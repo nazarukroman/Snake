@@ -27,6 +27,10 @@ const paths = {
   images: {
     src: 'src/images/**/*.{jpg,jpeg,png}',
     dest: 'build/img/'
+  },
+  fonts: {
+    src: 'src/fonts',
+    dest: 'src/'
   }
 };
 
@@ -84,14 +88,21 @@ export const images = () => (
     .pipe(gulp.dest(paths.images.dest))
 );
 
+export const fonts = () => (
+  gulp.src(paths.fonts.src)
+    .pipe(gulp.dest(paths.fonts.dest))
+    .pipe(browserSync.stream())
+);
+
 export const watchFiles = () => {
+  gulp.watch(paths.html.src, layout).on('change', browserSync.reload);
   gulp.watch(paths.scripts.src, scripts);
   gulp.watch(paths.styles.src, styles);
   gulp.watch(paths.images.src, images);
-  gulp.watch(paths.html.src, layout).on('change', browserSync.reload);
+  gulp.watch(paths.images.src, fonts);
 };
 
-const build = gulp.series(clean, gulp.parallel(layout, styles, scripts, images));
+const build = gulp.series(clean, gulp.parallel(layout, styles, scripts, images, fonts));
 export const watch = gulp.parallel(watchFiles, browserSyncServer);
 
 export default build;
