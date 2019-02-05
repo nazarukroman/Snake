@@ -29,8 +29,8 @@ const paths = {
     dest: 'build/images/'
   },
   fonts: {
-    src: 'src/fonts',
-    dest: 'src/'
+    src: 'src/fonts/**/*.{woff,woff2}',
+    dest: 'build/fonts/'
   }
 };
 
