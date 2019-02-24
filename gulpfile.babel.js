@@ -14,37 +14,37 @@ const browserSync = browser.create();
 const paths = {
   html: {
     src: 'src/html/**/*.html',
-    dest: 'build/'
+    dest: 'docs/'
   },
   styles: {
     src: 'src/styles/**/*.scss',
-    dest: 'build/styles/'
+    dest: 'docs/styles/'
   },
   scripts: {
     src: 'src/js/**/*.js',
-    dest: 'build/js/'
+    dest: 'docs/js/'
   },
   images: {
     src: 'src/images/**/*.{jpg,jpeg,png}',
-    dest: 'build/images/'
+    dest: 'docs/images/'
   },
   fonts: {
     src: 'src/fonts/**/*.{woff,woff2}',
-    dest: 'build/fonts/'
+    dest: 'docs/fonts/'
   }
 };
 
 const browserSyncServer = (done) => {
   browserSync.init({
     server: {
-      baseDir: 'build/'
+      baseDir: 'docs/'
     },
     port: 3000
   });
   done()
 };
 
-export const clean = () => (del([ 'build' ]));
+export const clean = () => (del([ 'docs' ]));
 
 export const layout = () => (
   gulp.src(paths.html.src)
@@ -102,7 +102,7 @@ export const watchFiles = () => {
   gulp.watch(paths.images.src, fonts);
 };
 
-const build = gulp.series(clean, gulp.parallel(layout, styles, scripts, images, fonts));
+const docs = gulp.series(clean, gulp.parallel(layout, styles, scripts, images, fonts));
 export const watch = gulp.parallel(watchFiles, browserSyncServer);
 
-export default build;
+export default docs;
